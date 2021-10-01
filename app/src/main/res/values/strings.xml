@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">demo1</string>
+    <string name="register_title">Bienvenido</string>
+    <string name="field_nickname">Usuario/Alias</string>
+    <string name="field_first_name">Nombre</string>
+    <string name="field_last_name">Apellido</string>
+    <string name="field_date_of_birth">Fecha de nacimiento</string>
+    <string name="field_height">Estatura</string>
+    <string name="field_password">Clave</string>
+    <string name="btn_register">Registrarme</string>
+</resources>
