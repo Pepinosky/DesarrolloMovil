@@ -4,110 +4,106 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/background_orange"
     tools:context=".MainActivity">
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        android:paddingLeft="16dp"
+        android:paddingTop="32dp"
+        android:paddingRight="16dp"
+        android:paddingBottom="32dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <LinearLayout
+        <TextView
+            android:id="@+id/activity_main_title_date_filter"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:text="@string/date_filter" />
 
-            <TextView
-                android:id="@+id/textView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="4sp"
-                android:text="@string/register_title"
-                android:textColor="#2C2E2A"
-                android:textSize="24sp" />
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="68dp"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/activity_main_field_user"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="4sp">
+                android:id="@+id/activity_main_date_from"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_margin="4dp"
+                android:layout_weight="1"
+                android:focusable="false">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/field_nickname" />
+                    android:hint="@string/date_from" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/activity_main_field_name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="4sp">
+                android:id="@+id/activity_main_date_until"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_margin="4dp"
+                android:layout_weight="1"
+                android:focusable="false">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/field_first_name" />
-            </com.google.android.material.textfield.TextInputLayout>
+                    android:hint="@string/date_until" />
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/activity_main_field_last_name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="4sp">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/field_last_name" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/activity_main_field_birth_date"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="4sp">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/field_date_of_birth" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/activity_main_field_height"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="4sp">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/field_height" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/activity_main_field_password"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="4sp">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/field_password" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <Button
-                android:id="@+id/activity_main_btn_register"
-                android:layout_width="match_parent"
+                android:id="@+id/activity_main_btn_filter"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/btn_register" />
+                android:layout_margin="4dp"
+                android:layout_weight="0.2"
+                android:text="@string/btn_filter"
+                android:translationY="-24dp" />
 
         </LinearLayout>
-    </ScrollView>
+
+        <TextView
+            android:id="@+id/activity_main_title_evaluations"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/text_evaluation" />
+
+        <ListView
+            android:id="@+id/activity_main_lv_evaluations"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+        <Button
+            android:id="@+id/activity_main_btn_new_evaluation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="4dp"
+            android:backgroundTint="@color/button_brown"
+            android:text="@string/btn_new_evaluation"
+            android:textColor="@color/white" />
+
+        <Button
+            android:id="@+id/activity_main_btn_logout"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/btn_logout" />
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -2,65 +2,82 @@ package com.example.demo1;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ListView;
+import android.widget.TextView;
 
+import com.example.demo1.controllers.AuthController;
+import com.example.demo1.models.Evaluation;
+import com.example.demo1.models.User;
+import com.example.demo1.ui.EvaluationAdapter;
 import com.google.android.material.textfield.TextInputLayout;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    TextInputLayout fieldFirstName, fieldLastName, fieldHeight, fieldBirthDate, fieldPassword, fieldUser;
-    Button btnRegister;
+    TextInputLayout fieldFrom, fieldUntil;
+    private TextView tvTitle;
+    private ListView lvAllEvaluations;
+    private Button btnLogout, btnNewEvaluation;
+    private AuthController authController;
+    private List<Evaluation> evaluationList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        btnNewEvaluation= findViewById(R.id.activity_main_btn_new_evaluation);
+        btnLogout = findViewById(R.id.activity_main_btn_logout);
+        tvTitle= findViewById(R.id.activity_main_title_evaluations);
+        authController = new AuthController(this);
 
-        fieldUser = findViewById(R.id.activity_main_field_user);
-        fieldFirstName = findViewById(R.id.activity_main_field_name);
-        fieldLastName = findViewById(R.id.activity_main_field_last_name);
-        fieldBirthDate = findViewById(R.id.activity_main_field_birth_date);
-
-        btnRegister = findViewById(R.id.activity_main_btn_register);
-        btnRegister.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.v("RegisterPressed", fieldUser.getEditText().getText().toString());
-            }
-        })
+        User user = authController.getUserSession();
+        tvTitle.setText(String.format("Evaluaciones de %s", user.getFirstName()));
 
 
 
+        lvAllEvaluations = findViewById(R.id.activity_main_lv_evaluations);
+        for (int x = 0; x < 6; ++x) {
+            Evaluation newEvaluation = new Evaluation(new Date(), x , 20, 65);
+            newEvaluation.setId(x);
+            evaluationList.add(newEvaluation);
+        }
+        EvaluationAdapter adapter = new EvaluationAdapter(this, evaluationList);
 
-        Log.v( "Debugging", "se creo el activity");
+        lvAllEvaluations.setAdapter(adapter);
+
+        lvAllEvaluations.setOnItemClickListener(((adapterView, view, index, id) -> {
+            Evaluation evaluation = evaluationList.get(index);
+
+            Intent i = new Intent(view.getContext(), EvaluationDetailsActivity.class);
+            i.putExtra("evaluacion", evaluation);
+            view.getContext().startActivity(i);
+        }));
+
+
+        btnNewEvaluation.setOnClickListener(view -> {
+            Intent i = new Intent(view.getContext(), NewEvaluationActivity.class);
+            startActivity(i);
+        });
+
+
+        btnLogout.setOnClickListener(view -> { authController.logout(); });
+
+
+
     }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-        Log.v( "Debugging", "se pauso el activity");
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        Log.v( "Debugging", "se reanudo el activity");
 
 
-    }
 
-    @Override
-    protected void onStop() {
-        super.onStop();
-        Log.v( "Debugging", "se detuvo el activity");
-    }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        Log.v( "Debugging", "se destruyo el activity");
-    }
+
+
 }

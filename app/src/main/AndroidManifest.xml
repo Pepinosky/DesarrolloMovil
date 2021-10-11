@@ -10,7 +10,22 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Demo1">
         <activity
-            android:name=".MainActivity"
+            android:name=".EvaluationDetailsActivity"
+            android:exported="true" />
+        <activity
+            android:name=".NewEvaluationActivity"
+            android:exported="true" />
+        <activity
+            android:name=".EvaluationActivity"
+            android:exported="true" />
+        <activity
+            android:name=".RegisterEvaluationActivity"
+            android:exported="true" />
+        <activity
+            android:name=".RegisterActivity"
+            android:exported="true" />
+        <activity
+            android:name=".LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -18,6 +33,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".MainActivity"
+            android:exported="true" />
     </application>
 
 </manifest>
