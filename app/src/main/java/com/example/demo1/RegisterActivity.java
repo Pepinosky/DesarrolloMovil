@@ -35,12 +35,8 @@ public class RegisterActivity extends AppCompatActivity {
         fieldPassword= findViewById(R.id.activity_register_field_password);
         fieldHeight= findViewById(R.id.activity_register_field_height);
 
-        btnLogin.setOnClickListener(view -> {
-            Toast.makeText(view.getContext(), "Volviendo a inicio de sesion...",Toast.LENGTH_SHORT).show();
-            Intent i = new Intent(view.getContext(), LoginActivity.class);
-            startActivity(i);
-            finish();
-        });
+
+
 
         fieldBirthday.getEditText().setOnClickListener(view -> {
             DatePickerFragment.showDatePickerDialog(this, fieldBirthday, new Date());
@@ -53,50 +49,8 @@ public class RegisterActivity extends AppCompatActivity {
             String password = fieldPassword.getEditText().getText().toString();
             String birthday = fieldBirthday.getEditText().getText().toString();
             double height =  Double.parseDouble(fieldHeight.getEditText().getText().toString());
+            // TODO: Implementar validaciones y corregir problema de registro de usuario
 
-
-
-
-            boolean nicknameValid = !nickname.isEmpty();
-            boolean firstNameValid = !firstName.isEmpty();
-            boolean lastNameValid = !lastName.isEmpty();
-            boolean birthdayValid = !birthday.isEmpty();
-            boolean passwordValid = !password.isEmpty();
-
-
-            if (!nicknameValid) {
-                fieldNickName.setError("El email es inválido");
-            } else {
-                fieldNickName.setError(null);
-                fieldNickName.setErrorEnabled(false);
-            }
-            if (!firstNameValid) {
-                fieldPassword.setError("Campo requerido");
-            } else {
-                fieldPassword.setError(null);
-                fieldPassword.setErrorEnabled(false);
-            }
-            if (!birthdayValid) {
-                fieldPassword.setError("Campo requerido");
-            } else {
-                fieldPassword.setError(null);
-                fieldPassword.setErrorEnabled(false);
-            }
-            if (!lastNameValid) {
-                fieldPassword.setError("Campo requerido");
-            } else {
-                fieldPassword.setError(null);
-                fieldPassword.setErrorEnabled(false);
-            }
-
-            if (!passwordValid) {
-                fieldPassword.setError("Campo requerido");
-            } else {
-                fieldPassword.setError(null);
-                fieldPassword.setErrorEnabled(false);
-            }
-
-            if (nicknameValid && firstNameValid && lastNameValid && birthdayValid && passwordValid){
                 SimpleDateFormat dateFormatter = new SimpleDateFormat(DATE_PATTERN);
 
                 Date birthdayDate = null;
@@ -112,16 +66,14 @@ public class RegisterActivity extends AppCompatActivity {
                 AuthController controller = new AuthController(view.getContext());
 
                 controller.register(user);
-            }else{
-                Toast.makeText(view.getContext(), "Campos inválidos", Toast.LENGTH_SHORT).show();
-            }
 
+        });
 
-
-
-
-
-
+        btnLogin.setOnClickListener(view -> {
+            Toast.makeText(view.getContext(), "Volviendo a inicio de sesion...",Toast.LENGTH_SHORT).show();
+            Intent i = new Intent(view.getContext(), LoginActivity.class);
+            startActivity(i);
+            finish();
         });
     }
 }

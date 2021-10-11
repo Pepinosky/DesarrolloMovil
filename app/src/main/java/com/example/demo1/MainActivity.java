@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.example.demo1.controllers.AuthController;
 import com.example.demo1.models.Evaluation;
 import com.example.demo1.models.User;
+import com.example.demo1.ui.DatePickerFragment;
 import com.example.demo1.ui.EvaluationAdapter;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -22,9 +23,10 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    TextInputLayout fieldFrom, fieldUntil;
+    private TextInputLayout fieldFrom, fieldUntil;
     private TextView tvTitle;
     private ListView lvAllEvaluations;
+
     private Button btnLogout, btnNewEvaluation;
     private AuthController authController;
     private List<Evaluation> evaluationList = new ArrayList<>();
@@ -35,12 +37,21 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         btnNewEvaluation= findViewById(R.id.activity_main_btn_new_evaluation);
         btnLogout = findViewById(R.id.activity_main_btn_logout);
+        fieldFrom= findViewById(R.id.activity_main_date_from);
+        fieldUntil= findViewById(R.id.activity_main_date_until);
         tvTitle= findViewById(R.id.activity_main_title_evaluations);
         authController = new AuthController(this);
 
         User user = authController.getUserSession();
         tvTitle.setText(String.format("Evaluaciones de %s", user.getFirstName()));
 
+
+        fieldFrom.getEditText().setOnClickListener(view -> {
+            DatePickerFragment.showDatePickerDialog(this, fieldFrom, new Date());
+        });
+        fieldUntil.getEditText().setOnClickListener(view -> {
+            DatePickerFragment.showDatePickerDialog(this, fieldUntil, new Date());
+        });
 
 
         lvAllEvaluations = findViewById(R.id.activity_main_lv_evaluations);
