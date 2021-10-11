@@ -63,7 +63,7 @@
             android:textColor="@color/text_white" />
 
         <Button
-            android:id="@+id/activity_evaluation_details_btn_register"
+            android:id="@+id/activity_evaluation_details_btn_back"
             style="@style/Widget.MaterialComponents.Button.TextButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
