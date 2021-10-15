@@ -15,7 +15,6 @@ import com.google.android.material.textfield.TextInputLayout;
 public class LoginActivity extends AppCompatActivity {
 
     private Button btnLogin, btnRegister;
-
     private TextInputLayout fieldNickName, fieldPassword;
     private AuthController authController;
 

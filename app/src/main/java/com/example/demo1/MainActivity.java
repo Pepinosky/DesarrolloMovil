@@ -26,7 +26,6 @@ public class MainActivity extends AppCompatActivity {
     private TextInputLayout fieldFrom, fieldUntil;
     private TextView tvTitle;
     private ListView lvAllEvaluations;
-
     private Button btnLogout, btnNewEvaluation;
     private AuthController authController;
     private List<Evaluation> evaluationList = new ArrayList<>();
