@@ -34,7 +34,12 @@ public class RegisterActivity extends AppCompatActivity {
         fieldNickName= findViewById(R.id.activity_register_field_nickname);
         fieldPassword= findViewById(R.id.activity_register_field_password);
         fieldHeight= findViewById(R.id.activity_register_field_height);
-
+        btnLogin.setOnClickListener(view -> {
+            Toast.makeText(view.getContext(), "Volviendo a inicio de sesion...",Toast.LENGTH_SHORT).show();
+            Intent i = new Intent(view.getContext(), LoginActivity.class);
+            startActivity(i);
+            finish();
+        });
 
 
 
@@ -48,20 +53,66 @@ public class RegisterActivity extends AppCompatActivity {
             String lastName = fieldLastName.getEditText().getText().toString();
             String password = fieldPassword.getEditText().getText().toString();
             String birthday = fieldBirthday.getEditText().getText().toString();
-            double height =  Double.parseDouble(fieldHeight.getEditText().getText().toString());
+            String height = fieldHeight.getEditText().getText().toString();
 
-            // TODO: Implementar validaciones y corregir problema de registro de usuario
 
-                SimpleDateFormat dateFormatter = new SimpleDateFormat(DATE_PATTERN);
+
+            SimpleDateFormat dateFormatter = new SimpleDateFormat(DATE_PATTERN);
+
+            boolean nicknameValid= !nickname.isEmpty();
+            boolean firstNameValid= !firstName.isEmpty();
+            boolean lastNameValid= !lastName.isEmpty();
+            boolean passwordValid = !password.isEmpty();
+
+            if (!nicknameValid) {
+                fieldNickName.setError( "campo requerido");
+            } else {
+                fieldNickName.setError(null);
+                fieldNickName.setErrorEnabled(false);
+            }
+
+            if (!firstNameValid) {
+                fieldFirstName.setError( "campo requerido");
+            } else {
+                fieldFirstName.setError(null);
+                fieldFirstName.setErrorEnabled(false);
+            }
+
+            if (!lastNameValid) {
+                fieldLastName.setError( "campo requerido");
+            } else {
+                fieldLastName.setError(null);
+                fieldLastName.setErrorEnabled(false);
+            }
+
+            if (!passwordValid) {
+                fieldPassword.setError("campo requerido");
+            } else {
+                fieldPassword.setError(null);
+                fieldPassword.setErrorEnabled(false);
+            }
+
+
 
                 Date birthdayDate = null;
-                try {
+                double valHeight = 0.0;
+            try {
                     birthdayDate = dateFormatter.parse(birthday);
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
 
-                User user = new User(nickname, firstName, lastName, height, birthdayDate);
+                try {
+                     valHeight =  Double.parseDouble(height);
+                    fieldHeight.setError(null);
+                    fieldHeight.setErrorEnabled(false);
+
+                } catch (NumberFormatException error){
+                    fieldHeight.setError("estatura invalida Ej: 1.76");
+                    return;
+                }
+
+                User user = new User(nickname, firstName, lastName, valHeight, birthdayDate);
                 user.setPassword(password);
 
                 AuthController controller = new AuthController(view.getContext());
@@ -70,11 +121,6 @@ public class RegisterActivity extends AppCompatActivity {
 
         });
 
-        btnLogin.setOnClickListener(view -> {
-            Toast.makeText(view.getContext(), "Volviendo a inicio de sesion...",Toast.LENGTH_SHORT).show();
-            Intent i = new Intent(view.getContext(), LoginActivity.class);
-            startActivity(i);
-            finish();
-        });
+
     }
 }

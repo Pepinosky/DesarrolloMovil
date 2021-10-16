@@ -25,9 +25,6 @@ public class LoginActivity extends AppCompatActivity {
         authController = new AuthController(this);
         authController.checkUserSession();
 
-
-
-
         fieldNickName= findViewById(R.id.activity_login_field_user);
         fieldPassword= findViewById(R.id.activity_login_field_password);
         btnLogin = findViewById(R.id.activity_login_btn_login);
@@ -46,7 +43,7 @@ public class LoginActivity extends AppCompatActivity {
             boolean passwordValid = !password.isEmpty();
 
             if (!nicknameValid) {
-                fieldNickName.setError("usuario inválido");
+                fieldNickName.setError("Campo requerido");
             } else {
                fieldNickName.setError(null);
                 fieldNickName.setErrorEnabled(false);

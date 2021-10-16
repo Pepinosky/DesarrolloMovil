@@ -77,11 +77,8 @@ public class AuthController {
 
     public void register(User user) {
         String hashedPassword = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt());
-        Log.d("Password", String.format("Pw> %s / Hash: %s",user.getPassword(), hashedPassword));
         user.setPassword(hashedPassword);
-
         UserEntity userEntity= new UserMapper(user).toEntity();
-
         userDao.insert(userEntity);
 
         Toast.makeText(ctx, String.format("Usuario %s registrado", user.getNickName()), Toast.LENGTH_SHORT).show();
@@ -91,6 +88,11 @@ public class AuthController {
 
     public void login(String nickName, String password) {
         UserEntity userEntity = userDao.findByNickName(nickName);
+
+        if(userEntity == null){
+            Toast.makeText(ctx, "credenciales invalidas", Toast.LENGTH_SHORT).show();
+            return;
+        }
         User user = new UserMapper(userEntity).toBase();
 
         if (BCrypt.checkpw(password, user.getPassword())) {
@@ -100,7 +102,7 @@ public class AuthController {
             ctx.startActivity(i);
             ((Activity) ctx).finish();
         } else {
-            Toast.makeText(ctx, String.format("La contraseña es incorrecta", nickName), Toast.LENGTH_SHORT).show();
+            Toast.makeText(ctx, "credenciales invalidas", Toast.LENGTH_SHORT).show();
         }
     }
 

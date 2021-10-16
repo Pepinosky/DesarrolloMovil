@@ -27,5 +27,6 @@
     <string name="date_from">Desde</string>
     <string name="date_until">Hasta</string>
     <string name="btn_filter">Filtrar</string>
+    <string name="empty_field">campo requerido</string>
 
 </resources>

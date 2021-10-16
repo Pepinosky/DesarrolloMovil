@@ -11,7 +11,7 @@ import com.example.demo1.dao.UserDao;
 import com.example.demo1.models.UserEntity;
 import com.example.demo1.utils.Converters;
 
-@Database(entities = {UserEntity.class}, version = 1)
+@Database(entities = {UserEntity.class}, version = 2)
 @TypeConverters({Converters.class})
 public abstract class GymAppDatabase extends RoomDatabase {
     private  static final String DB_NAME = "gym_app_db";
