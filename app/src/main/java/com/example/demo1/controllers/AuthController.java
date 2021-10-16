@@ -4,11 +4,17 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.example.demo1.LoginActivity;
 import com.example.demo1.MainActivity;
+import com.example.demo1.dao.UserDao;
+import com.example.demo1.lib.BCrypt;
+import com.example.demo1.lib.GymAppDatabase;
 import com.example.demo1.models.User;
+import com.example.demo1.models.UserEntity;
+import com.example.demo1.models.UserMapper;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -21,6 +27,8 @@ public class AuthController {
     private final String KEY_LAST_NAME = "userLastName";
     private final String KEY_BIRTH_DAY ="userBirthDay";
     private final String KEY_NICKNAME ="userNickName";
+
+    private UserDao userDao;
     private Context ctx;
     private SharedPreferences preferences;
 
@@ -30,7 +38,7 @@ public class AuthController {
         int PRIVATE_MODE= 0;
         String PREF_NAME= "GymAppPref";
         this.preferences= ctx.getSharedPreferences(PREF_NAME, PRIVATE_MODE);
-
+        this.userDao= GymAppDatabase.getInstance(ctx).userDao();
     }
 
     private void setUserSession(User user){
@@ -68,16 +76,24 @@ public class AuthController {
     }
 
     public void register(User user) {
+        String hashedPassword = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt());
+        Log.d("Password", String.format("Pw> %s / Hash: %s",user.getPassword(), hashedPassword));
+        user.setPassword(hashedPassword);
+
+        UserEntity userEntity= new UserMapper(user).toEntity();
+
+        userDao.insert(userEntity);
+
         Toast.makeText(ctx, String.format("Usuario %s registrado", user.getNickName()), Toast.LENGTH_SHORT).show();
         Intent i = new Intent(ctx, LoginActivity.class);
         ctx.startActivity(i);
     }
 
     public void login(String nickName, String password) {
-        User user= new User("pepino", "alonso", "astorga", 1.70,  new Date());
-        user.setPassword("123456");
-        user.setId(1);
-        if (password.equals(user.getPassword())) {
+        UserEntity userEntity = userDao.findByNickName(nickName);
+        User user = new UserMapper(userEntity).toBase();
+
+        if (BCrypt.checkpw(password, user.getPassword())) {
             setUserSession(user);
             Toast.makeText(ctx, String.format("Bienvenido %s", user.getNickName()), Toast.LENGTH_SHORT).show();
             Intent i = new Intent(ctx, MainActivity.class);

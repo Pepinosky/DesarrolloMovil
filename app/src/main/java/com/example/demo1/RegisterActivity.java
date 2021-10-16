@@ -49,6 +49,7 @@ public class RegisterActivity extends AppCompatActivity {
             String password = fieldPassword.getEditText().getText().toString();
             String birthday = fieldBirthday.getEditText().getText().toString();
             double height =  Double.parseDouble(fieldHeight.getEditText().getText().toString());
+
             // TODO: Implementar validaciones y corregir problema de registro de usuario
 
                 SimpleDateFormat dateFormatter = new SimpleDateFormat(DATE_PATTERN);

@@ -35,9 +35,7 @@ public class EvaluationDetailsActivity extends AppCompatActivity {
         });
 
         btnBack.setOnClickListener(view -> {
-            Intent i = new Intent(view.getContext(), MainActivity.class);
-            startActivity(i);
-            finish();
+            super.onBackPressed();
         });
 
 

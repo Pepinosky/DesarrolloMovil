@@ -46,7 +46,7 @@ public class LoginActivity extends AppCompatActivity {
             boolean passwordValid = !password.isEmpty();
 
             if (!nicknameValid) {
-                fieldNickName.setError("El email es inválido");
+                fieldNickName.setError("usuario inválido");
             } else {
                fieldNickName.setError(null);
                 fieldNickName.setErrorEnabled(false);

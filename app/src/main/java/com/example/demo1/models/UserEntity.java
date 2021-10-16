@@ -1,29 +1,48 @@
 package com.example.demo1.models;
+
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.Index;
+import androidx.room.PrimaryKey;
+
 import java.util.Date;
 
-public class User implements IUser {
+@Entity(tableName = "users", indices = {@Index(value= "nickname", unique = true)})
+public class UserEntity implements IUser {
+    @PrimaryKey(autoGenerate = true)
     private long id;
+
+    @ColumnInfo(name = "nickname")
     private String nickName;
+
+    @ColumnInfo(name = "first_name")
     private String firstName;
+
+    @ColumnInfo(name = "last_name")
     private String lastName;
+
+    @ColumnInfo(name = "height")
     private double height;
+
+    @ColumnInfo(name = "birthday")
     private Date birthday;
+
+    @ColumnInfo(name = "password")
     private String password;
 
-    public User(String nickName, String firstName, String lastName, double height, Date birthday) {
-        this.nickName= nickName;
+
+    public UserEntity(long id, String nickName, String firstName, String lastName, double height, Date birthday, String password) {
+        this.id = id;
+        this.nickName = nickName;
         this.firstName = firstName;
         this.lastName = lastName;
         this.height = height;
         this.birthday = birthday;
+        this.password = password;
     }
 
     public long getId() {
         return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
     }
 
     public String getNickName() {
@@ -50,7 +69,5 @@ public class User implements IUser {
         return password;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
+
 }
