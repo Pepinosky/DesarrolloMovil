@@ -7,11 +7,13 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 
+import com.example.demo1.dao.EvaluationDao;
 import com.example.demo1.dao.UserDao;
+import com.example.demo1.models.EvaluationEntity;
 import com.example.demo1.models.UserEntity;
 import com.example.demo1.utils.Converters;
 
-@Database(entities = {UserEntity.class}, version = 2)
+@Database(entities = {UserEntity.class, EvaluationEntity.class}, version = 3)
 @TypeConverters({Converters.class})
 public abstract class GymAppDatabase extends RoomDatabase {
     private  static final String DB_NAME = "gym_app_db";
@@ -28,5 +30,6 @@ public abstract class GymAppDatabase extends RoomDatabase {
     }
 
     public abstract UserDao userDao();
+    public abstract EvaluationDao evaluationDao();
 
 }

@@ -11,6 +11,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.demo1.controllers.AuthController;
+import com.example.demo1.controllers.EvaluationController;
 import com.example.demo1.models.Evaluation;
 import com.example.demo1.models.User;
 import com.example.demo1.ui.DatePickerFragment;
@@ -28,18 +29,21 @@ public class MainActivity extends AppCompatActivity {
     private ListView lvAllEvaluations;
     private Button btnLogout, btnNewEvaluation;
     private AuthController authController;
-    private List<Evaluation> evaluationList = new ArrayList<>();
+    private EvaluationController evaluationController;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        authController = new AuthController(this);
+        evaluationController= new EvaluationController(this);
+
         btnNewEvaluation= findViewById(R.id.activity_main_btn_new_evaluation);
         btnLogout = findViewById(R.id.activity_main_btn_logout);
         fieldFrom= findViewById(R.id.activity_main_date_from);
         fieldUntil= findViewById(R.id.activity_main_date_until);
         tvTitle= findViewById(R.id.activity_main_title_evaluations);
-        authController = new AuthController(this);
 
         User user = authController.getUserSession();
         tvTitle.setText(String.format("Evaluaciones de %s", user.getFirstName()));
@@ -54,11 +58,8 @@ public class MainActivity extends AppCompatActivity {
 
 
         lvAllEvaluations = findViewById(R.id.activity_main_lv_evaluations);
-        for (int x = 0; x < 6; ++x) {
-            Evaluation newEvaluation = new Evaluation(new Date(), x , 20, 65);
-            newEvaluation.setId(x);
-            evaluationList.add(newEvaluation);
-        }
+
+        List<Evaluation> evaluationList= evaluationController.getAll();
         EvaluationAdapter adapter = new EvaluationAdapter(this, evaluationList);
 
         lvAllEvaluations.setAdapter(adapter);
@@ -67,14 +68,14 @@ public class MainActivity extends AppCompatActivity {
             Evaluation evaluation = evaluationList.get(index);
 
             Intent i = new Intent(view.getContext(), EvaluationDetailsActivity.class);
-            i.putExtra("evaluacion", evaluation);
+            i.putExtra("evaluation", evaluation);
             view.getContext().startActivity(i);
         }));
 
 
         btnNewEvaluation.setOnClickListener(view -> {
             Intent i = new Intent(view.getContext(), NewEvaluationActivity.class);
-            startActivity(i);
+           view.getContext().startActivity(i);
         });
 
 

@@ -8,30 +8,32 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.demo1.controllers.EvaluationController;
 import com.example.demo1.models.Evaluation;
 
 public class EvaluationDetailsActivity extends AppCompatActivity {
-    private TextView tvDate, tvImc, tvHeight;
+    private TextView tvDate, tvImc, tvWeight;
     private Button btnDelete, btnBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_evaluation_details);
-        Evaluation evaluation = (Evaluation)  getIntent().getSerializableExtra("Evaluation");
+        Evaluation evaluation = (Evaluation) getIntent().getSerializableExtra("evaluation");
 
         tvDate = findViewById(R.id.activity_evaluation_details_text_date);
-        tvHeight= findViewById(R.id.activity_evaluation_details_text_weight);
+        tvWeight= findViewById(R.id.activity_evaluation_details_text_weight);
         tvImc= findViewById(R.id.activity_evaluation_details_text_imc);
         btnDelete= findViewById(R.id.activity_evaluation_details_btn_delete);
         btnBack= findViewById(R.id.activity_evaluation_details_btn_back);
 
+        tvDate.setText(evaluation.getStringDate());
+        tvWeight.setText(evaluation.getStringWeight());
+        tvImc.setText(evaluation.getStringImc());
 
         btnDelete.setOnClickListener(view -> {
-            Toast.makeText(view.getContext(), "Evaluacion eliminada...",Toast.LENGTH_SHORT).show();
-            Intent i = new Intent(view.getContext(), MainActivity.class);
-            startActivity(i);
-            finish();
+            EvaluationController controller= new EvaluationController(view.getContext());
+            controller.delete(evaluation.getId());
         });
 
         btnBack.setOnClickListener(view -> {
