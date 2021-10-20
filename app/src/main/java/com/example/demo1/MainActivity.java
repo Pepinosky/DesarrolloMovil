@@ -85,10 +85,19 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        List<Evaluation> evaluationList= evaluationController.getAll();
+        EvaluationAdapter adapter = new EvaluationAdapter(this, evaluationList);
 
+        lvAllEvaluations.setAdapter(adapter);
+        lvAllEvaluations.setOnItemClickListener(((adapterView, view, index, id) -> {
+            Evaluation evaluation = evaluationList.get(index);
 
-
-
-
-
+            Intent i = new Intent(view.getContext(), EvaluationDetailsActivity.class);
+            i.putExtra("evaluation", evaluation);
+            view.getContext().startActivity(i);
+        }));
+    }
 }
