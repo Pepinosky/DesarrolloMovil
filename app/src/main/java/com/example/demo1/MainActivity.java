@@ -25,9 +25,9 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     private TextInputLayout fieldFrom, fieldUntil;
-    private TextView tvTitle;
+    private TextView tvTitle, tvCleanFilter;
     private ListView lvAllEvaluations;
-    private Button btnLogout, btnNewEvaluation;
+    private Button btnLogout, btnNewEvaluation, btnFilter;
     private AuthController authController;
     private EvaluationController evaluationController;
 
@@ -41,9 +41,11 @@ public class MainActivity extends AppCompatActivity {
 
         btnNewEvaluation= findViewById(R.id.activity_main_btn_new_evaluation);
         btnLogout = findViewById(R.id.activity_main_btn_logout);
+        btnFilter = findViewById(R.id.activity_main_btn_filter);
         fieldFrom= findViewById(R.id.activity_main_date_from);
         fieldUntil= findViewById(R.id.activity_main_date_until);
         tvTitle= findViewById(R.id.activity_main_title_evaluations);
+        tvCleanFilter= findViewById(R.id.activity_main_clean_filter);
 
         User user = authController.getUserSession();
         tvTitle.setText(String.format("Evaluaciones de %s", user.getFirstName()));

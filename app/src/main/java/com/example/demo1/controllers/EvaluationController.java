@@ -1,7 +1,9 @@
 package com.example.demo1.controllers;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.widget.Toast;
 
@@ -32,8 +34,28 @@ public class EvaluationController {
         ((Activity) ctx).onBackPressed();
      }
     public void delete(long id){
-        evaluationDao.delete(id);
-        ((Activity) ctx).onBackPressed();
+        DialogInterface.OnClickListener dialogClickListener = (dialog, which) -> {
+            switch (which){
+                case DialogInterface.BUTTON_POSITIVE:
+                    try {
+                        evaluationDao.delete(id);
+                        ((Activity) ctx).onBackPressed();
+                    } catch(Error error) {
+                        error.printStackTrace();
+                        Toast.makeText(this.ctx, "Error al eliminar la evaluacion", Toast.LENGTH_SHORT).show();
+                    }
+                    break;
+                case DialogInterface.BUTTON_NEGATIVE:
+                    break;
+            }
+        };
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this.ctx);
+        builder.setMessage("Estás seguro de eliminar la evaluacion?")
+                .setPositiveButton("Si", dialogClickListener)
+                .setNegativeButton("No", dialogClickListener)
+                .show();
+
     }
    public List<Evaluation> getAll(){
          List<EvaluationEntity> evaluationEntityList = evaluationDao.findAll();

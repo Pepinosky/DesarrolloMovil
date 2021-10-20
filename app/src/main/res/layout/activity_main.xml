@@ -77,6 +77,15 @@
         </LinearLayout>
 
         <TextView
+            android:id="@+id/activity_main_clean_filter"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:text="Limpiar filtro"
+            android:textColor="#4F0FC1" />
+
+        <TextView
             android:id="@+id/activity_main_title_evaluations"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
