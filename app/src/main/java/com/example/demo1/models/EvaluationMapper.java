@@ -10,9 +10,9 @@ public class EvaluationMapper {
     public Evaluation toBase(){
         Evaluation baseEvaluation = new Evaluation(
                 this.evaluation.getDate(),
-                this.evaluation.getId(),
                 this.evaluation.getImc(),
-                this.evaluation.getWeight()
+                this.evaluation.getWeight(),
+                this.evaluation.getUserId()
         );
         baseEvaluation.setId(this.evaluation.getId());
         return baseEvaluation;
@@ -23,7 +23,8 @@ public class EvaluationMapper {
                 this.evaluation.getId(),
                 this.evaluation.getWeight(),
                 this.evaluation.getDate(),
-                this.evaluation.getImc()
+                this.evaluation.getImc(),
+                this.evaluation.getUserId()
         );
     }
 }

@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
+
 import android.widget.Toast;
 
 import com.example.demo1.dao.EvaluationDao;
@@ -12,6 +12,7 @@ import com.example.demo1.lib.GymAppDatabase;
 import com.example.demo1.models.Evaluation;
 import com.example.demo1.models.EvaluationEntity;
 import com.example.demo1.models.EvaluationMapper;
+import com.example.demo1.models.User;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -58,7 +59,10 @@ public class EvaluationController {
 
     }
    public List<Evaluation> getAll(){
-         List<EvaluationEntity> evaluationEntityList = evaluationDao.findAll();
+       AuthController authController = new AuthController(ctx);
+       User user = authController.getUserSession();
+
+         List<EvaluationEntity> evaluationEntityList = evaluationDao.findAll(user.getId());
 
          List<Evaluation> evaluationList= new ArrayList<>();
 
@@ -69,6 +73,23 @@ public class EvaluationController {
        }
 
          return evaluationList;
+    }
+
+
+
+    public List<Evaluation> getRange(Date from, Date to) {
+        AuthController authController = new AuthController(ctx);
+        User user = authController.getUserSession();
+        List<EvaluationEntity> evaluationEntityList = evaluationDao.findByRange(from, to, user.getId());
+        List<Evaluation> taskList = new ArrayList<>();
+
+        for(EvaluationEntity evaluationEntity : evaluationEntityList) {
+            EvaluationMapper mapper = new EvaluationMapper(evaluationEntity);
+            Evaluation evaluation = mapper.toBase();
+            taskList.add(evaluation);
+        }
+
+        return taskList;
     }
 
 

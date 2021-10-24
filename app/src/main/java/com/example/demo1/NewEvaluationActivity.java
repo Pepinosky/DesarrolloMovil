@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import com.example.demo1.controllers.AuthController;
 import com.example.demo1.controllers.EvaluationController;
+import com.example.demo1.lib.FieldValidator;
 import com.example.demo1.models.Evaluation;
 import com.example.demo1.models.User;
 import com.example.demo1.ui.DatePickerFragment;
@@ -43,16 +44,28 @@ public class NewEvaluationActivity extends AppCompatActivity {
             String date= fieldDate.getEditText().getText().toString();
             String weight= fieldWeight.getEditText().getText().toString();
 
+            boolean validWeight = new FieldValidator(fieldWeight)
+                    .required()
+                    .strMin(1)
+                    .isValid();
+            boolean validDate = new FieldValidator(fieldDate)
+                    .required()
+                    .date()
+                    .dateBefore(DateUtils.addDays(new Date(), 1))
+                    .isValid();
 
-            //TODO: validations
+            if (!validDate || !validWeight) {
+                return;
+            }
+
             Date evaluationDate= DateUtils.unsafeParse(date);
-
-            Evaluation evaluation = new Evaluation(evaluationDate, 1, 1.70, Double.parseDouble(weight) );
-
+            AuthController authController = new AuthController(view.getContext());
+            User user = authController.getUserSession();
+            double evaluationWeight = Double.parseDouble(weight);
+            double imc = evaluationWeight /(user.getHeight() * user.getHeight());
+            Evaluation evaluation = new Evaluation(evaluationDate,  imc, evaluationWeight, user.getId() );
             EvaluationController controller= new EvaluationController(view.getContext());
-           controller.register(evaluation);
-
-
+            controller.register(evaluation);
 
             Toast.makeText(view.getContext(), "Evaluacion registrada...",Toast.LENGTH_SHORT).show();
 

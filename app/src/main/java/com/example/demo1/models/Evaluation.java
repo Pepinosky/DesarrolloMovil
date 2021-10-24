@@ -10,12 +10,13 @@ public class Evaluation implements Serializable, IEvaluation {
     private long id;
     private double imc;
     private double weight;
+    private long userId;
 
-    public Evaluation(Date date, long id, double imc,  double weight) {
+    public Evaluation(Date date,  double imc,  double weight, long userId) {
         this.date = date;
         this.imc= imc;
-        this.id = id;
         this.weight = weight;
+        this.userId= userId;
     }
 
     public Date getDate() {
@@ -27,7 +28,7 @@ public class Evaluation implements Serializable, IEvaluation {
     }
 
     public double getImc() {
-        return weight / (1.70 * 1.70 );
+        return imc;
     }
 
     public String getStringImc(){
@@ -54,7 +55,7 @@ public class Evaluation implements Serializable, IEvaluation {
         return formatter.format(date);
     }
 
-
-
-
+    public long getUserId() {
+        return userId;
+    }
 }

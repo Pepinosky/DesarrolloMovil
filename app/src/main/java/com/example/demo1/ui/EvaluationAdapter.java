@@ -9,13 +9,16 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.demo1.R;
+import com.example.demo1.controllers.AuthController;
 import com.example.demo1.models.Evaluation;
+import com.example.demo1.models.User;
 
 public class EvaluationAdapter extends BaseAdapter {
 
 
     private Context ctx;
     private List<Evaluation> evaluationList;
+    private AuthController authController;
 
     public EvaluationAdapter(Context ctx, List<Evaluation> evaluationList) {
         this.ctx = ctx;
@@ -43,7 +46,8 @@ public class EvaluationAdapter extends BaseAdapter {
         LayoutInflater inflater = LayoutInflater.from(ctx);
 
         view = inflater.inflate(R.layout.item_evaluation, null);
-
+        authController = new AuthController(ctx);
+        User user = authController.getUserSession();
         Evaluation evaluation = evaluationList.get(i);
 
 
@@ -54,7 +58,7 @@ public class EvaluationAdapter extends BaseAdapter {
 
         tvDate.setText( String.format("Fecha: %s",evaluation.getStringDate()));
         tvWeight.setText(String.format("Peso: %s",Double.toString(evaluation.getWeight())));
-        tvImc.setText(String.format("IMC: %s",Double.toString((evaluation.getWeight()) / (1.70 * 1.70))));
+        tvImc.setText(String.format("IMC: %s",Double.toString((evaluation.getWeight()) / (user.getHeight() * user.getHeight()))));
 
         return view;
     }

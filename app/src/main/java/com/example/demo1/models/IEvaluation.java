@@ -7,5 +7,6 @@ public interface IEvaluation {
     long getId();
     double getImc();
     double getWeight();
+    long getUserId();
 
 }
