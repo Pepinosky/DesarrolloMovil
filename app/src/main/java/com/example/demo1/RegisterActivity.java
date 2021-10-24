@@ -94,33 +94,33 @@ public class RegisterActivity extends AppCompatActivity {
 
 
 
-                Date birthdayDate = null;
-                double valHeight = 0.0;
+            Date birthdayDate = null;
+            double valHeight = 0.0;
             try {
-                    birthdayDate = dateFormatter.parse(birthday);
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
+                birthdayDate = dateFormatter.parse(birthday);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
 
-                try {
-                     valHeight =  Double.parseDouble(height);
-                    fieldHeight.setError(null);
-                    fieldHeight.setErrorEnabled(false);
+            try {
+                valHeight =  Double.parseDouble(height);
+                fieldHeight.setError(null);
+                fieldHeight.setErrorEnabled(false);
 
-                } catch (NumberFormatException error){
-                    fieldHeight.setError("estatura invalida Ej: 1.76");
-                    return;
-                }
+            } catch (NumberFormatException error){
+                fieldHeight.setError("estatura invalida Ej: 1.76");
+                return;
+            }
 
-                User user = new User(nickname, firstName, lastName, valHeight, birthdayDate);
-                user.setPassword(password);
+            User user = new User(nickname, firstName, lastName, valHeight, birthdayDate);
+            user.setPassword(password);
 
-                AuthController controller = new AuthController(view.getContext());
+            AuthController controller = new AuthController(view.getContext());
 
-                controller.register(user);
+            controller.register(user);
 
         });
-
+        //TODO: solucionar reformateo de validaciones
 
     }
 }
